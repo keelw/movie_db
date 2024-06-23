@@ -10,7 +10,7 @@ public class Movie
     [StringLength(60, MinimumLength = 3)]
     public string Title { get; set; } = string.Empty;
 
-    [Display(Name = "Release Date"), DataType(DataType.Date), Range(typeof(DateTime), "1/1/1966", "1/1/2020")]
+    [Display(Name = "Release Date"), DataType(DataType.Date)]
     public DateTime ReleaseDate { get; set; }
 
     [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$"), Required, StringLength(30)]

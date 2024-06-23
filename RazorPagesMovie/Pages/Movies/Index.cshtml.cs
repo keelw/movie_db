@@ -30,12 +30,22 @@ namespace RazorPagesMovie.Pages_Movies
         [BindProperty(SupportsGet = true)]
         public string? MovieGenre { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int? SelectedYear { get; set; }
+
+        public SelectList? Years { get; set; }
+
         public async Task OnGetAsync()
         {
             // Use LINQ to get list of genres.
             IQueryable<string> genreQuery = from m in _context.Movie
                                             orderby m.Genre
                                             select m.Genre;
+
+            // Use LINQ to get list of years.
+            IQueryable<int> yearQuery = from m in _context.Movie
+                                        orderby m.ReleaseDate.Year
+                                        select m.ReleaseDate.Year;
 
             var movies = from m in _context.Movie
                          select m;
@@ -49,7 +59,14 @@ namespace RazorPagesMovie.Pages_Movies
             {
                 movies = movies.Where(x => x.Genre == MovieGenre);
             }
+
+            if (SelectedYear.HasValue)
+            {
+                movies = movies.Where(x => x.ReleaseDate.Year >= SelectedYear.Value);
+            }
+
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
+            Years = new SelectList(await yearQuery.Distinct().ToListAsync());
             Movie = await movies.ToListAsync();
         }
     }

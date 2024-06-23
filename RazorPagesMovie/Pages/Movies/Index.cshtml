@@ -2,23 +2,24 @@
 @model RazorPagesMovie.Pages_Movies.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
 
-<h1>Index</h1>
+<h1>Will's Movies</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
 
-<form>
-    <p>
-        <select asp-for="MovieGenre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
-        Title: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
+<form class="filter-form">
+    <select asp-for="MovieGenre" asp-items="Model.Genres">
+        <option value="">All</option>
+    </select>
+    Title: <input type="text" asp-for="SearchString" />
+    Year: <select asp-for="SelectedYear" asp-items="Model.Years">
+        <option value="">All</option>
+    </select>
+    <input type="submit" value="Filter" />
 </form>
 
 <table class="table">
